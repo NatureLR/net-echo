@@ -1,0 +1,35 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: net-echo
+spec:
+  selector:
+    matchLabels:
+      app: net-echo
+  template:
+    metadata:
+      labels:
+        app: net-echo
+    spec:
+      containers:
+      - name: net-echo
+        image: naturelingran/net-echo:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: net-echo
+spec:
+  selector:
+    app: net-echo
+  ports:
+  - port: 80
+    targetPort: 80
+  type: NodePort
