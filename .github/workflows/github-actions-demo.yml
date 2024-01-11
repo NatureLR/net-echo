@@ -32,6 +32,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.GITHUB_ACTION_REPOSITORY }}:${{ env.GITHUB_REF }}
+          tags: naturelrlingran/net-echo:${GITHUB_REF}
           file: ./build/Dockerfile
           platforms: linux/amd64,linux/arm64
