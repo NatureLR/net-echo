@@ -10,11 +10,13 @@ WORKDIR /build
 
 COPY . .
 
+# 国内替换镜像源
+# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \ 
+
 # 修改源为国内阿里
 # 修改时区为上海
 # 安装make和git工具
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
-    apk add --no-cache ca-certificates tzdata  && \
+RUN  apk add --no-cache ca-certificates tzdata  && \
     ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     apk add make && \
     apk add git
@@ -29,8 +31,8 @@ FROM ${RUN_IMAGE}
 
 WORKDIR /root/
 
-RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list && \
-    apt update && \
+# RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources
+RUN apt update && \
     apt install -y \
     telnet \
     dnsutils \
@@ -42,5 +44,7 @@ RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list && \
 COPY --from=build /build/net-echo .
 
 EXPOSE 80
+
+#ENTRYPOINT ["./net-echo"]
 
 CMD ["./net-echo"]

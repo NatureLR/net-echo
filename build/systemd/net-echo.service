@@ -22,7 +22,7 @@ Type=simple
 #EnvironmentFile=
 
 # 定义启动执行的命令
-ExecStart=/usr/local/bin/toolbox
+ExecStart=/usr/local/bin/net-echo
 # 定义重启执行的命令
 ExecReload=/bin/kill -s HUP $MAINPID
 # 重启策略
