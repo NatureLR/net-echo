@@ -18,13 +18,16 @@ jobs:
     
       - name: Display Tag or Commit ID
         run: |
-          if [ "${{ github.event_name }}" == "push" ]; then
-            if [ "${{ startsWith(github.ref, 'refs/tags/') }}" == "true" ]; then
-              echo "Tag: ${{ github.ref }}"
-            else
-              echo "Commit ID: ${{ github.sha }}"
-            fi
-          fi
+              if [ "${{ github.event_name }}" == "push" ]; then
+                if [ "${{ startsWith(github.ref, 'refs/tags/') }}" == "true" ]; then
+                  echo "Tag: ${{ github.ref }}"
+                  echo "TAG_NAME=${{ github.ref }}" >> $GITHUB_ENV
+                else
+                  short_commit_id=$(git rev-parse --short "${{ github.sha }}")
+                  echo "Short Commit ID: $short_commit_id"
+                  echo "TAG_NAME=$short_commit_id" >> $GITHUB_ENV
+                fi
+              fi
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -43,7 +46,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REPO }}:${{ github.sha }}
+          tags: ${{ env.REPO }}:${{ env.TAG_NAME }},${{ env.REPO }}:latest
           file: ./build/Dockerfile
           platforms: linux/amd64,linux/arm64
 
@@ -52,4 +55,4 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ env.REPO}}
+          repository: ${{ env.REPO }}
