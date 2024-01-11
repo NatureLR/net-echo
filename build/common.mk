@@ -14,7 +14,7 @@ endif
 # go 参数
 GOOS       ?= $(shell go env GOOS)
 GOARCH     ?= $(shell go env GOARCH)
-GOVERSION  ?= 1.18
+GOVERSION  ?= 1.21
 
 # 目录
 ROOT_DIR   := $(realpath $(CURDIR))
@@ -54,12 +54,13 @@ CHECK_TGZ := if [ ! -f "$(TGZ_DIR)/$(PRJVER).tar.gz" ]; then echo tgz文件不�
 # docker
 GO_IMAGE         ?= golang:$(GOVERSION)-buster
 # 产生镜像时用于运行的镜像
-GO_RUN_IMAGE     ?= debian:bullseye
+GO_RUN_IMAGE     ?= debian:bookworm
 GO_BUILD_IMAGE   ?= golang:$(GOVERSION)-alpine
 GO_BASE_IMAGE    ?= golang:$(GOVERSION)-buster
 RPM_BUILD_IMAGE  ?= centos:7
 DEB_BUILD_IMAGE  ?= debian:buster
 
+# 自己的仓库
 DOCKER_REPO       = naturelingran
 IMAGE_ADDR        = $(DOCKER_REPO)/$(PROJECT):$(VERSION)
 IMAGE_ADDR_LATEST = $(DOCKER_REPO)/$(PROJECT):latest
