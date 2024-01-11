@@ -32,6 +32,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: user/app:${{ env.GITHUB_REF_NAME }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.GITHUB_ACTION_REPOSITORY }}:${{ env.GITHUB_REF }}
           file: ./build/Dockerfile
           platforms: linux/amd64,linux/arm64
