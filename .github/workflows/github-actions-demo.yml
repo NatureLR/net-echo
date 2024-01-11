@@ -6,32 +6,50 @@ on:
       - 'v*'
     branches:
       - master
+env:
+  REPO: naturelrlingran/net-echo
 
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Set up QEMU
+    
+      - name: Display Tag or Commit ID
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            if [ "${{ startsWith(github.ref, 'refs/tags/') }}" == "true" ]; then
+              echo "Tag: ${{ github.ref }}"
+            else
+              echo "Commit ID: ${{ github.sha }}"
+            fi
+          fi
+
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-      -
-        name: Set up Docker Buildx
+
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      -
-        name: Login to Docker Hub
+  
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+
+      - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: naturelrlingran/net-echo:${{ github.ref }}
+          tags: ${{ env.REPO }}:${{ github.sha }}
           file: ./build/Dockerfile
           platforms: linux/amd64,linux/arm64
+
+      - name: Update repo description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ env.REPO}}
