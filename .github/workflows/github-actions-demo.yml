@@ -22,7 +22,7 @@ jobs:
             if [ "${{ startsWith(github.ref, 'refs/tags/') }}" == "true" ]; then
               echo "Tag: ${{ github.ref }}"
             else
-              echo "Commit ID: ${{ github.sha:7 }}"
+              echo "Commit ID: ${{ github.sha }}"
             fi
           fi
 
