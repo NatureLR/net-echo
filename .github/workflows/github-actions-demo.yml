@@ -32,6 +32,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: naturelrlingran/net-echo:${{ GITHUB_REF }}
+          tags: naturelrlingran/net-echo:${{ github.ref }}
           file: ./build/Dockerfile
           platforms: linux/amd64,linux/arm64
