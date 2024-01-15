@@ -110,10 +110,3 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	}
 	info.Output(w)
 }
-
-func Run() {
-	http.HandleFunc("/", handle)
-	if err := http.ListenAndServe(":80", nil); err != nil {
-		log.Fatalln(err)
-	}
-}
