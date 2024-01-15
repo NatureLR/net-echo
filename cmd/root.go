@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	netecho "github/naturelr/net-echo/pkg/net-echo"
+	"github/naturelr/net-echo/pkg/netecho"
 	"github/naturelr/net-echo/pkg/versions"
 	"os"
 	"path/filepath"
