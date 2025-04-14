@@ -1,7 +1,7 @@
 # 编译镜像 golang:x.y.z-alpine3.13
-ARG BUILD_IMAGE=golang:1.21-alpine
+ARG BUILD_IMAGE=golang:1.24-alpine
 # github上默认得使用Debian
-ARG RUN_IMAGE=debian:bookworm 
+ARG RUN_IMAGE=ubuntu:latest
 
 # 编译镜像
 FROM ${BUILD_IMAGE} as build
@@ -32,7 +32,8 @@ FROM ${RUN_IMAGE}
 
 WORKDIR /root/
 
-# RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources
+RUN echo "iperf3 iperf3/start_daemon boolean false" | debconf-set-selections
+
 RUN apt update && \
     apt install -y \
     telnet \
@@ -40,7 +41,8 @@ RUN apt update && \
     iputils-ping \
     iproute2 \
     wget \
-    curl
+    curl \
+    iperf3
 
 COPY --from=build /build/net-echo .
 
