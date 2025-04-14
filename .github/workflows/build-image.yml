@@ -7,7 +7,7 @@ on:
     branches:
       - master
 env:
-  REPO: naturelingran/net-echo
+  REPO: naturelr/net-echo
 
 jobs:
   docker:

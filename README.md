@@ -3,7 +3,7 @@
 ## docker
 
 ```shell
-docker run -d --restart=unless-stopped --name net-echo -p 80:80  naturelingran/net-echo:latest
+docker run -d --restart=unless-stopped --name net-echo -p 80:80  naturelr/net-echo:latest
 ```
 
 ## k8s
