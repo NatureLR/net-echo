@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: net-echo
-        image: naturelingran/net-echo:latest
+        image: naturelr/net-echo:latest
         resources:
           limits:
             memory: "128Mi"
