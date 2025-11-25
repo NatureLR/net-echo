@@ -1,10 +1,10 @@
 # 编译镜像 golang:x.y.z-alpine3.13
-ARG BUILD_IMAGE=golang:1.24-alpine
+ARG BUILD_IMAGE=golang:1.25-alpine
 # github上默认得使用Debian
 ARG RUN_IMAGE=ubuntu:latest
 
 # 编译镜像
-FROM ${BUILD_IMAGE} as build
+FROM ${BUILD_IMAGE} AS build
 
 ENV ROOT_DIR=/build
 WORKDIR /build
